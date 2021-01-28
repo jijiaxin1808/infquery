@@ -1,0 +1,27 @@
+{
+  "name": "inf-inputs",
+  "version": "0.0.1",
+  "description": "a javascript package like Inquirerjs on vscode",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jijiaxin1808/Inquirerjs-for-vscode.git"
+  },
+  "keywords": [
+    "vscode",
+    "Inquirerjs"
+  ],
+  "author": "jijiaxin1808",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jijiaxin1808/Inquirerjs-for-vscode/issues"
+  },
+  "homepage": "https://github.com/jijiaxin1808/Inquirerjs-for-vscode#readme",
+  "dependencies": {
+    "@types/vscode": "^1.52.0",
+    "typescript": "^4.1.3"
+  }
+}
