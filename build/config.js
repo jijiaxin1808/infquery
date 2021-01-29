@@ -15,8 +15,7 @@ const build = {
       file: resolveFile('dist/index.cjs.js'),
       format: 'cjs',
     },
-    external: Object.keys(dependencies),
-    env: DEV,
+    external: [...Object.keys(dependencies), 'vscode'],
 }
 
 function genConfig(name) {
@@ -24,7 +23,7 @@ function genConfig(name) {
   const config = {
     ...opts,
     cache: true,
-    input: resolveFile('src/libs/index.ts'),
+    input: resolveFile('src/index.ts'),
     output: {
       name: moduleName,
       ...opts.output,

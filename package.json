@@ -2,9 +2,10 @@
   "name": "inf-inputs",
   "version": "0.0.1",
   "description": "a javascript package like Inquirerjs on vscode",
-  "main": "index.js",
+  "main": "dist/index.cjs.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rollup -c build/config.js"
+    "build": "rm dist -rf && rollup -c build/config.js && tsc"
   },
   "repository": {
     "type": "git",
