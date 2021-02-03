@@ -5,10 +5,10 @@ export interface inputConfig {
 }
 
 export default function createInput(config: inputConfig) {
-  const { default } = config
+  // const { default: def } = config
   return new Promise((reslove, reject) => {
     vscode.window.showInputBox({
-      value: default
+      value: 'default'
     })
   })
 }
