@@ -38,8 +38,7 @@ export async function infInput<T extends QuickPickItem>(questions: question<T>[]
                     break;
                 default: 
                 }
-
-                if (res !== undefined) {
+                if(typeof res === 'string') {
                     result[name] = (prefix || "") + res + (suffix || "");
                 }
             }
