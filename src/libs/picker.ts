@@ -11,18 +11,20 @@ export interface pickerConfig {
 }
 
 export function isStringArray(item: QuickPickItem[] | string[]): item is string[] {
+    if (!item.length) return true;
     return typeof item[0] === 'string';
 }
 
 export function createPicker<T extends QuickPickItem>(item: T[] | string[], config: pickerConfig) {
     const { placeHolder } = config;
-    if(!item.length) return;
-    let items: QuickPickItem[];
+    let items: QuickPickItem[] =[];
     if(isStringArray(item)) {
         items = item.map(label => ({label}));
+    } else { 
+        items = item; 
     }
     return new Promise((reslove) => {
-        window.showQuickPick(items as  T[], {
+        window.showQuickPick(items, {
             placeHolder,
             ignoreFocusOut: true
         }).then(res => reslove(res));
