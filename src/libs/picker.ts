@@ -14,14 +14,15 @@ export function isStringArray(item: QuickPickItem[] | string[]): item is string[
     return typeof item[0] === 'string';
 }
 
-export function createPicker(item: QuickPickItem[] | string[], config: pickerConfig) {
+export function createPicker<T extends QuickPickItem>(item: T[] | string[], config: pickerConfig) {
     const { placeHolder } = config;
     if(!item.length) return;
+    let items: QuickPickItem[];
     if(isStringArray(item)) {
-        item = item.map(label => ({label}));
+        items = item.map(label => ({label}));
     }
     return new Promise((reslove) => {
-        window.showQuickPick(item as  QuickPickItem[], {
+        window.showQuickPick(items as  T[], {
             placeHolder,
             ignoreFocusOut: true
         }).then(res => reslove(res));
