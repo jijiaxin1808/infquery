@@ -1,45 +1,55 @@
 /* eslint-disable no-case-declarations */
 import { createValiteFunc } from './utils/curry';
-import { createInput } from './libs/input';
-import { createPicker } from './libs/picker';
+import { createInput } from './utils/input';
+import { createPicker } from './utils/picker';
 import { QuickPickItem } from 'vscode';
 export async function infInput<T extends QuickPickItem>(questions: question<T>[]): Promise<resultObj> {
-    // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (reslove, reject) => {
         try {
+            // 返回给使用者的result
             const result: resultObj = {};
             for (const question of questions) {
+
+                // 获取question的参数
                 const { name, message, when, default: defaultVale, prefix, suffix } = question;
 
-                const con = typeof when === 'function' ? when(result) : when || true;
-                if (!con) continue;
+                // 当when返回true时，跳过当前问题
+                if (typeof when === 'function' ? when(result) : when || !when) continue;
 
+                // 获取初始值
                 const value = typeof defaultVale === 'function' ? defaultVale(result) : defaultVale || '';
+
+                // 获取placeholder
                 const placeHolder = typeof message === 'function' ? message(result) : message || '';
-                let res = null;
+
+                // 当前问题答案
+                let answer = null;
 
                 switch (question.type) {
+                // 如果是input类型
                 case 'input' : 
                     const { validate } = question;
-                    const validateInput = validate ? createValiteFunc<string, resultObj ,valited>(validate, result) : () => '';
-                    res =  await createInput({
+                    // 这里是为了处理vscode的validater的格式（vscode的参数只有一个string），用到了一个二层的curry函数
+                    const validateInput = validate ? createValiteFunc<string, resultObj ,valited>(validate, result) : undefined;
+                    answer =  await createInput({
                         validateInput,
                         placeHolder,
-                        value: value as string
+                        value: String(value)
                     });
                     break;
+                // 如果是picker类型
                 case 'list': 
                     const { choices } = question;
                     if (choices === undefined) throw new Error('当类型为list时, 请填写choices');
                     const items =Array.isArray(choices) ? choices : choices(result);
-                    res =  await createPicker<T>(items,{
+                    answer =  await createPicker<T>(items,{
                         placeHolder
                     });
                     break;
                 default: 
                 }
-                if(typeof res === 'string') {
-                    result[name] = (prefix || "") + res + (suffix || "");
+                if(typeof answer === 'string') {
+                    result[name] = (prefix || "") + answer + (suffix || "");
                 }
             }
             reslove(result);

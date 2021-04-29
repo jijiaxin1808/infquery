@@ -1,10 +1,4 @@
-import { result, valited } from '../index';
 import { QuickPickItem, window } from 'vscode';
-export interface inputConfig {
-  placeHolder: string,
-  value: result,
-  validateInput: (input: string) => valited
-}
 
 export interface pickerConfig {
   placeHolder: string,

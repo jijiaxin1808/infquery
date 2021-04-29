@@ -3,7 +3,7 @@ import { result, valited } from '../index';
 export interface inputConfig {
   placeHolder: string,
   value: result,
-  validateInput: (input: string) => valited
+  validateInput: ((input: string) => valited) | undefined
 }
 
 export function createInput(config: inputConfig) {

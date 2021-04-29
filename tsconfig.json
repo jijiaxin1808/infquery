@@ -20,8 +20,6 @@
     "outDir": "dist",
     "jsx": "react",
     "sourceMap": true,
-    // You have to define these again in jest.config.js
-    // open jest.config.js for more information
     "paths": {
       "@/*": ["src/*"]
     },

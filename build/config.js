@@ -53,6 +53,7 @@ function genConfig(name) {
             }),
             replace({
                 'process.env.NODE_ENV': JSON.stringify(opts.env),
+                preventAssignment: true
             }),
         ].concat(opts.plugins || []),
     };
